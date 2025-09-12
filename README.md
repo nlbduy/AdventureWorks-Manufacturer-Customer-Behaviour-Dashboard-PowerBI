@@ -6,6 +6,16 @@ Tool Used: Power BI
 
 # **📑** Table of Contents
 
+- [**📌** Project Overview](#-------project-overview)
+
+- [**📂** Dataset](#-------dataset)
+
+- [**🧠 Design Thinking Process**](#-----design-thinking-process--)
+
+- [**📊 Key Insights & Visualizations**](#-----key-insights---visualizations--)
+
+- [**🚀 Final Conclusions and Recommendations**](#-----final-conclusions-and-recommendations--)
+
 # **📌** Project Overview
 
 ## 🎯 Project Objectives
@@ -82,7 +92,7 @@ For detailed table schemas, kindly reach the [Data Dictionary](https://drive.goo
 
 **3️⃣ Data Relationships**
 
-![image.png](attachment:b13e2e5c-aa53-438e-82ad-06d206328a55:image.png)
+<img width="2000" height="860" alt="Image" src="https://github.com/user-attachments/assets/b3215ef3-e6d7-4a70-ad50-a7810b54d1cc" />
 
 **Relationship between tables**
 
@@ -139,11 +149,31 @@ Key reasons:
 
 👉 In short, Design Thinking makes BI projects move from **“just reporting”** to **“strategic decision support”** by combining data with empathy, creativity, and business context.
 
+1️⃣ **Empathize**
+
+<img width="2000" height="404" alt="Image" src="https://github.com/user-attachments/assets/175acb4b-74b5-44a6-b1af-91a79b19f747" />
+
+<img width="2000" height="890" alt="Image" src="https://github.com/user-attachments/assets/36cedb3a-99f9-42a7-b335-a814b834f309" />
+
+2️⃣ **Define Point Of View**
+
+<img width="2000" height="569" alt="Image" src="https://github.com/user-attachments/assets/c6957f34-be74-4931-ba3f-15e2a28bfcd5" />
+
+3️⃣ **Ideate**
+
+<img width="2000" height="557" alt="Image" src="https://github.com/user-attachments/assets/ba4121b3-fcd7-4977-bf97-32fefaa17322" />
+
+4️⃣ **Prototype and review**
+
+This part is in the dashboard
+
 # **📊 Key Insights & Visualizations**
 
 ## **🔍 Dashboard Preview**
 
 ### **1️⃣ Customer Demographics Overview**
+
+<img width="2000" height="1120" alt="Image" src="https://github.com/user-attachments/assets/257f6559-6e59-40e7-9067-c5cbe0b4cba0" />
 
 🎯 **Objective**: The purpose of this section is to provide a comprehensive overview of the demographic profile of AdventureWorks’ individual (B2C) customers, highlighting key patterns that can inform marketing, product, and customer engagement strategies.
 
@@ -194,6 +224,8 @@ AdventureWorks serves approximately 18,500 individual consumers, with the custom
 - **European markets -** including the **United Kingdom**, **France**, and **Germany -** also make up a meaningful share, providing opportunities for region-specific strategies.
 
 ### **2️⃣ Customer Performance Analysis**
+
+<img width="2000" height="1120" alt="Image" src="https://github.com/user-attachments/assets/b1b4be19-c2ac-470c-aae3-7ce8c945d9c7" />
 
 🎯 **Objective**: The goal of this analysis is to evaluate customer purchasing performance, including order value, purchase drivers, and revenue contribution.
 
@@ -267,6 +299,7 @@ By combining these three scores, each customer is assigned an **RFM score**, res
 | ❄️ **Hibernating Customers**| 332, 322, 233, 232, 223, 222, 132, 123, 122, 212, 211                                                                 | These customers have been inactive for a long period, with low purchase frequency and low transaction value.                                                                                                  |
 | ⛔ **Lost Customers**      | 111, 112, 121, 131, 141, 151                                                                                           | These are customers who have not returned for a very long time, with the lowest purchase frequency and transaction value. They are likely to have stopped using the product or switched to competitors.       |
 
+<img width="2000" height="1120" alt="Image" src="https://github.com/user-attachments/assets/5415a68d-4fe8-44cd-bbe6-28fd785cc15f" />
 
 **📌 Key Findings**
 
