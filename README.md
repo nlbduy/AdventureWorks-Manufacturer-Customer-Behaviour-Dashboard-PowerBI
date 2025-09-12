@@ -346,7 +346,7 @@ By combining these three scores, each customer is assigned an **RFM score**, res
 🔷 **6. At Risk**
 
 - Size: ~12%
-- Characteristics: High Recency (~~286 days), very high Monetary (~~$4.8K), medium Frequency.
+- Characteristics: High Recency (286 days), very high Monetary ($4.8K), medium Frequency.
 - Contribution: High-value group but inactive for a long time.
 - Discounts: Low, though they need it most.
 - Insight: Previously frequent buyers with high basket sizes → extremely valuable if reactivated.
