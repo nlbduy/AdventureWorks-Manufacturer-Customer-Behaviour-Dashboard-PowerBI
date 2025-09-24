@@ -1,14 +1,18 @@
 # **AdventureWorks Bicycles Manufacturer Customer Behaviour Analysis Dashboard with Power BI**
 
+<img width="2000" height="1367" alt="Image" src="https://github.com/user-attachments/assets/a280dbcd-4d46-4401-97a1-c91d33024adb" />
+
 Author: Nguyen Luu Bao Duy
 
 Tool Used: Power BI
 
-# **📑** Table of Contents
+# **📑 Table of Contents**
 
-- [**📌** Project Overview](#-------project-overview)
+- [**📌 Project Overview**](#-----project-overview--)
 
-- [**📂** Dataset](#-------dataset)
+- [**📂 Dataset**](#-----dataset--)
+
+- [**🏛️ RFM Model**](#------rfm-model--)
 
 - [**🧠 Design Thinking Process**](#-----design-thinking-process--)
 
@@ -16,11 +20,11 @@ Tool Used: Power BI
 
 - [**🚀 Final Conclusions and Recommendations**](#-----final-conclusions-and-recommendations--)
 
-# **📌** Project Overview
+# **📌 Project Overview**
 
 ## 🎯 Project Objectives
 
-This project leverages the AdventureWorks dataset to develop a Power BI dashboard that enables the Executive Board to better understand customer dynamics and derive actionable segmentation. The dashboard is designed to provide clarity on who the customers are, how they behave, and how the company can strategically respond to these insights.
+This project leverages the **AdventureWorks** dataset to develop a Power BI dashboard that enables the Executive Board to better understand **customer dynamics** and derive **actionable segmentation**. The dashboard is designed to provide clarity on who the customers are, how they behave, and how the company can strategically respond to these insights.
 
 Our objectives are to:
 
@@ -44,11 +48,11 @@ Our objectives are to:
 ## **🧩 Assumptions**
 
 - **Reference date for analysis**: the last recorded date in the dataset.
-    - *Rationale*: Since the data was dropped in June 2014, selecting the latest available date ensures meaningful insights, particularly for time-sensitive metrics such as *Age* and *Recency*.
+    - *Rationale*: Since the data was dropped in **June 2014**, selecting the latest available date ensures meaningful insights, particularly for time-sensitive metrics such as *Age* and *Recency*.
 - **Fiscal year**: January to December.
 - **Currency**: All monetary values are standardized in **USD** (as the Currency table only provides conversion from USD to other currencies).
 
-# **📂** Dataset
+# **📂 Dataset**
 
 ## **📝** Data Description
 
@@ -56,20 +60,13 @@ Our objectives are to:
 - Database: AdventureWorks
 - DMBS: SQL Server
 - Provided by: Microsoft
-- The dataset includes a variety of modules:
-    - **Business Entities:** Stores core information about companies, vendors, and contacts that AdventureWorks interacts with. Acts as the foundation for linking business partners across modules.
-    - **People:** Contains individual-level information (customers, employees, sales representatives).
-    - **Human Resources:** Covers employee records, departments, pay history, and job roles.
-    - **Products:** Stores the product catalog, including categories, models, and details of bicycles and related items.
-    - **Manufacturing:** Captures production data, work orders, and processes required to manufacture products.
-    - **Purchasing:** Holds data on vendors, purchase orders, and procurement activities.
-    - **Inventory:** Manages stock levels, locations, and movement of products.
-    - **Sales:** Contains sales transactions, customer orders, and sales territory data.
-    - **Admin:** Stores system-level and configuration data used to support operations across the database.
+- Time frame: The dataset includes records spanning from 2011 to 2014.
 
 ## **⚙️ Data Structure & Relationships**
 
-**1️⃣ Tables Used**
+1️⃣**Tables Used**
+<details>
+<summary>A list of tables used in the analysis</summary>
 
 | Dashboard Table Name            | Database Table Name                 | Description                                                                                   |
 |---------------------------------|-------------------------------------|-----------------------------------------------------------------------------------------------|
@@ -85,6 +82,7 @@ Our objectives are to:
 | Fact_SalesOrderDetail           | Sales.SalesOrderDetail              | Contains line-level detail for each order such as product, quantity, unit price, discount.    |
 | Fact_SalesOrderHeaderSalesReason| Sales.SalesOrderHeaderSalesReason   | Bridges sales orders with sales reasons, allowing analysis of why customers made purchases.   |
 
+</details>
 
 **2️⃣ Table Schemas**
 
@@ -94,7 +92,8 @@ For detailed table schemas, kindly reach the [Data Dictionary](https://drive.goo
 
 <img width="2000" height="860" alt="Image" src="https://github.com/user-attachments/assets/b3215ef3-e6d7-4a70-ad50-a7810b54d1cc" />
 
-**Relationship between tables**
+<details>
+<summary><b>Relationship between tables</b></summary>
 
 | From Table                      | Relationship   | To Table                         | Join Keys                                                                 | Status   |
 |---------------------------------|----------------|----------------------------------|----------------------------------------------------------------------------|----------|
@@ -112,16 +111,66 @@ For detailed table schemas, kindly reach the [Data Dictionary](https://drive.goo
 | `Fact_SalesOrderHeaderSalesReason` | Many-to-One | `Fact_SalesOrderHeader`          | `Fact_SalesOrderHeaderSalesReason.SalesOrderID` = `Fact_SalesOrderHeader.SalesOrderID` | Active   |
 | `Fact_SalesOrderHeaderSalesReason` | Many-to-One | `Dim_SalesReason`                | `Fact_SalesOrderHeaderSalesReason.SalesReasonID` = `Dim_SalesReason.SalesReasonID` | Active   |
 
-## **🗓️** Time Frame
+</details>
 
-- The dataset includes records spanning from 2011 to 2014.
-- The analysis is conducted for the same period.
+# **🏛️ RFM Model**
+
+**🏗️ What is an RFM Model?**
+
+RFM (Recency – Frequency – Monetary) is a customer segmentation model based on transaction history. It helps assess both the value of customers and their level of engagement with the business. Each customer is scored across three dimensions:
+
+- **Recency (R):** The time elapsed since the customer’s most recent purchase. The shorter the gap, the higher the likelihood of repeat purchases. A longer gap, in contrast, indicates a higher risk of churn.
+- **Frequency (F):** The number of transactions made within a defined period. Customers who purchase more frequently tend to have a stronger relationship with the brand and respond more actively to marketing efforts.
+- **Monetary (M):** The total amount of money a customer has spent. This reflects their spending capacity and their overall contribution to company revenue.
+
+**🌱 Benefits of RFM Analysis**
+
+Applying the RFM framework provides several advantages:
+
+- Increases the effectiveness of personalized marketing campaigns.
+- Improves Customer Lifetime Value.
+- Supports segmentation for targeted product launches.
+- Strengthens customer loyalty and engagement.
+- Reduces churn by identifying at-risk customers.
+- Optimizes marketing spend and improves ROI.
+- Enhances the performance of remarketing and retargeting campaigns.
+
+**🛠️ Scoring Methodology**
+
+Each customer is evaluated using the three RFM dimensions:
+
+- **Recency:** Calculated as the difference between the analysis date and the customer’s last transaction date.
+- **Frequency:** Measured by counting the total number of invoices or transactions per customer.
+- **Monetary:** Measured by summing the total value of all purchases across the customer’s lifetime.
+
+Once calculated, **the values for each dimension are divided into five equal groups** (quintiles), with **scores assigned from 1 to 5**. A score of 1 represents the lowest value, while a score of 5 represents the highest.
+
+The scoring direction differs by dimension:
+
+- **Recency:** Lower values (more recent activity) receive higher scores.
+- **Frequency and Monetary:** Higher values receive higher scores.
+
+By combining these three scores, each customer is assigned an **RFM score**, resulting in up to **125 unique combinations**. These combinations are then mapped into well-defined customer segments according to a segmentation framework.
+
+| Segment                   | RFM Scores                                                                                                             | Definition                                                                                                                                                                                                    |
+|----------------------------|------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 🏆 **Champions**          | 555, 554, 544, 545, 454, 455, 445                                                                                      | These are the most valuable customers who have purchased recently, buy frequently, and spend the most. They are highly loyal, willing to spend generously, and are very likely to make another purchase soon. |
+| 💎 **Loyal Customers**    | 543, 444, 435, 355, 354, 345, 344, 335                                                                                 | These customers spend at a medium to high level and purchase very frequently.                                                                                                                                 |
+| 💡 **Potential Loyalists**| 553, 551, 552, 541, 542, 533, 532, 531, 452, 451, 442, 441, 431, 453, 433, 432, 423, 353, 352, 351, 342, 341, 333, 323 | These are relatively new customers who have purchased recently, spend at a moderate level, and have already made more than one purchase.                                                                      |
+| ✨ **New Customers**       | 512, 511, 422, 421, 412, 411, 311                                                                                      | These are brand-new customers who made their first purchase recently, with low transaction value and low frequency.                                                                                           |
+| 🌱 **Promising**           | 525, 524, 523, 522, 521, 515, 514, 513, 425, 424, 413, 414, 415, 315, 314, 313                                         | These customers purchased recently with relatively high value but have not yet become frequent buyers.                                                                                                        |
+| 👀 **Need Attention**      | 535, 534, 443, 434, 343, 334, 325, 324                                                                                 | These customers used to have decent purchase frequency and value but have not bought again recently.                                                                                                          |
+| 😴 **About To Sleep**      | 331, 321, 312, 221, 213, 231, 241, 251                                                                                 | These customers have not purchased for quite a while and previously had low frequency and low transaction values.                                                                                             |
+| ⚠️ **At Risk**             | 255, 254, 245, 244, 253, 252, 243, 242, 235, 234, 225, 224, 153, 152, 145, 143, 142, 135, 134, 133, 125, 124           | These customers have not purchased for a long time, but they used to buy very frequently with medium to high transaction values.                                                                              |
+| 🚨 **Cannot Lose Them**    | 155, 154, 144, 214, 215, 115, 114, 113                                                                                 | These are long-inactive customers who previously purchased often and with high value. Without timely actions to re-engage, the business risks losing them permanently.                                        |
+| ❄️ **Hibernating Customers**| 332, 322, 233, 232, 223, 222, 132, 123, 122, 212, 211                                                                 | These customers have been inactive for a long period, with low purchase frequency and low transaction value.                                                                                                  |
+| ⛔ **Lost Customers**      | 111, 112, 121, 131, 141, 151                                                                                           | These are customers who have not returned for a very long time, with the lowest purchase frequency and transaction value. They are likely to have stopped using the product or switched to competitors.       |
 
 # **🧠 Design Thinking Process**
 
 This analysis uses a process called “**Design Thinking**” to generate ideas and solve problems.
 
-## **What is Design Thinking?**
+## **What is Design Thinking and Why it matters for BI projects?**
 
 Design Thinking is a **human-centered, iterative approach to problem-solving** that emphasizes understanding users, redefining problems, and creating innovative solutions through rapid prototyping and testing.
 
@@ -135,8 +184,6 @@ It is built on 5 stages:
 
 Unlike linear methods, Design Thinking is flexible and iterative, allowing teams to circle back when new insights emerge. It balances **desirability (user needs)**, **feasibility (technical capabilities)**, and **viability (business goals)**.
 
-## **Why Design Thinking for BI projects?**
-
 Business Intelligence (BI) initiatives often struggle when they focus too much on **tools, data models, and dashboards** while overlooking **actual user needs**. Design Thinking ensures BI solutions are not just technically correct but **practically impactful**.
 
 Key reasons:
@@ -149,21 +196,25 @@ Key reasons:
 
 👉 In short, Design Thinking makes BI projects move from **“just reporting”** to **“strategic decision support”** by combining data with empathy, creativity, and business context.
 
-1️⃣ **Empathize**
+## 1️⃣ **Stage 1: Empathize**
 
-<img width="2000" height="404" alt="Image" src="https://github.com/user-attachments/assets/175acb4b-74b5-44a6-b1af-91a79b19f747" />
+<img width="2000" height="1125" alt="Image" src="https://github.com/user-attachments/assets/1de29ebc-cbba-46ed-add1-0db693ab675f" />
 
-<img width="2000" height="890" alt="Image" src="https://github.com/user-attachments/assets/36cedb3a-99f9-42a7-b335-a814b834f309" />
+<img width="2000" height="1125" alt="Image" src="https://github.com/user-attachments/assets/c2990215-e3e5-4889-b5e8-d33af4345084" />
 
-2️⃣ **Define Point Of View**
+## 2️⃣ **Stage 2: Define Point Of View**
 
-<img width="2000" height="569" alt="Image" src="https://github.com/user-attachments/assets/c6957f34-be74-4931-ba3f-15e2a28bfcd5" />
+<img width="2000" height="1125" alt="Image" src="https://github.com/user-attachments/assets/b273342a-67e1-49b0-85b6-4efd5483c762" />
 
-3️⃣ **Ideate**
+<img width="2000" height="1125" alt="Image" src="https://github.com/user-attachments/assets/c2936c76-9634-4050-8b50-04bcc6ae3155" />
 
-<img width="2000" height="557" alt="Image" src="https://github.com/user-attachments/assets/ba4121b3-fcd7-4977-bf97-32fefaa17322" />
+## 3️⃣ **Stage 3: Ideate**
 
-4️⃣ **Prototype and review**
+<img width="2000" height="1125" alt="Image" src="https://github.com/user-attachments/assets/6680fe2d-0dc5-47ff-af7a-0fcc35f07b4d" />
+
+<img width="2000" height="1125" alt="Image" src="https://github.com/user-attachments/assets/9466917a-611b-438c-9e1f-a85e44cc2cc2" />
+
+## 4️⃣ **Stage 4: Prototype and review**
 
 This part is in the dashboard
 
@@ -173,7 +224,7 @@ This part is in the dashboard
 
 ### **1️⃣ Customer Demographics Overview**
 
-<img width="2000" height="1120" alt="Image" src="https://github.com/user-attachments/assets/257f6559-6e59-40e7-9067-c5cbe0b4cba0" />
+<img width="2000" height="1147" alt="Image" src="https://github.com/user-attachments/assets/ef4534fa-bf51-415e-987b-8039900589b0" />
 
 🎯 **Objective**: The purpose of this section is to provide a comprehensive overview of the demographic profile of AdventureWorks’ individual (B2C) customers, highlighting key patterns that can inform marketing, product, and customer engagement strategies.
 
@@ -225,7 +276,7 @@ AdventureWorks serves approximately 18,500 individual consumers, with the custom
 
 ### **2️⃣ Customer Performance Analysis**
 
-<img width="2000" height="1120" alt="Image" src="https://github.com/user-attachments/assets/b1b4be19-c2ac-470c-aae3-7ce8c945d9c7" />
+<img width="2000" height="1148" alt="Image" src="https://github.com/user-attachments/assets/c9c282cf-0c0a-4466-a83a-b1cc0804d40e" />
 
 🎯 **Objective**: The goal of this analysis is to evaluate customer purchasing performance, including order value, purchase drivers, and revenue contribution.
 
@@ -248,139 +299,24 @@ AdventureWorks serves approximately 18,500 individual consumers, with the custom
 
 🎯 **Objective**: The goal of this analysis is to segment customers using the RFM model into 11 groups.
 
-**🏗️ What is an RFM Framework?**
-
-RFM (Recency – Frequency – Monetary) is a customer segmentation model based on transaction history. It helps assess both the value of customers and their level of engagement with the business. Each customer is scored across three dimensions:
-
-- **Recency (R):** The time elapsed since the customer’s most recent purchase. The shorter the gap, the higher the likelihood of repeat purchases. A longer gap, in contrast, indicates a higher risk of churn.
-- **Frequency (F):** The number of transactions made within a defined period. Customers who purchase more frequently tend to have a stronger relationship with the brand and respond more actively to marketing efforts.
-- **Monetary (M):** The total amount of money a customer has spent. This reflects their spending capacity and their overall contribution to company revenue.
-
-**🌱 Benefits of RFM Analysis**
-
-Applying the RFM framework provides several advantages:
-
-- Increases the effectiveness of personalized marketing campaigns.
-- Improves Customer Lifetime Value.
-- Supports segmentation for targeted product launches.
-- Strengthens customer loyalty and engagement.
-- Reduces churn by identifying at-risk customers.
-- Optimizes marketing spend and improves ROI.
-- Enhances the performance of remarketing and retargeting campaigns.
-
-**🛠️ Scoring Methodology**
-
-Each customer is evaluated using the three RFM dimensions:
-
-- **Recency:** Calculated as the difference between the analysis date and the customer’s last transaction date.
-- **Frequency:** Measured by counting the total number of invoices or transactions per customer.
-- **Monetary:** Measured by summing the total value of all purchases across the customer’s lifetime.
-
-Once calculated, the values for each dimension are divided into five equal groups (quintiles), with scores assigned from 1 to 5. A score of 1 represents the lowest value, while a score of 5 represents the highest.
-
-The scoring direction differs by dimension:
-
-- **Recency:** Lower values (more recent activity) receive higher scores.
-- **Frequency and Monetary:** Higher values receive higher scores.
-
-By combining these three scores, each customer is assigned an **RFM score**, resulting in up to **125 unique combinations**. These combinations are then mapped into well-defined customer segments according to a segmentation framework.
-
-| Segment                   | RFM Scores                                                                                                             | Definition                                                                                                                                                                                                    |
-|----------------------------|------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 🏆 **Champions**          | 555, 554, 544, 545, 454, 455, 445                                                                                      | These are the most valuable customers who have purchased recently, buy frequently, and spend the most. They are highly loyal, willing to spend generously, and are very likely to make another purchase soon. |
-| 💎 **Loyal Customers**    | 543, 444, 435, 355, 354, 345, 344, 335                                                                                 | These customers spend at a medium to high level and purchase very frequently.                                                                                                                                 |
-| 💡 **Potential Loyalists**| 553, 551, 552, 541, 542, 533, 532, 531, 452, 451, 442, 441, 431, 453, 433, 432, 423, 353, 352, 351, 342, 341, 333, 323 | These are relatively new customers who have purchased recently, spend at a moderate level, and have already made more than one purchase.                                                                      |
-| ✨ **New Customers**       | 512, 511, 422, 421, 412, 411, 311                                                                                      | These are brand-new customers who made their first purchase recently, with low transaction value and low frequency.                                                                                           |
-| 🌱 **Promising**           | 525, 524, 523, 522, 521, 515, 514, 513, 425, 424, 413, 414, 415, 315, 314, 313                                         | These customers purchased recently with relatively high value but have not yet become frequent buyers.                                                                                                        |
-| 👀 **Need Attention**      | 535, 534, 443, 434, 343, 334, 325, 324                                                                                 | These customers used to have decent purchase frequency and value but have not bought again recently.                                                                                                          |
-| 😴 **About To Sleep**      | 331, 321, 312, 221, 213, 231, 241, 251                                                                                 | These customers have not purchased for quite a while and previously had low frequency and low transaction values.                                                                                             |
-| ⚠️ **At Risk**             | 255, 254, 245, 244, 253, 252, 243, 242, 235, 234, 225, 224, 153, 152, 145, 143, 142, 135, 134, 133, 125, 124           | These customers have not purchased for a long time, but they used to buy very frequently with medium to high transaction values.                                                                              |
-| 🚨 **Cannot Lose Them**    | 155, 154, 144, 214, 215, 115, 114, 113                                                                                 | These are long-inactive customers who previously purchased often and with high value. Without timely actions to re-engage, the business risks losing them permanently.                                        |
-| ❄️ **Hibernating Customers**| 332, 322, 233, 232, 223, 222, 132, 123, 122, 212, 211                                                                 | These customers have been inactive for a long period, with low purchase frequency and low transaction value.                                                                                                  |
-| ⛔ **Lost Customers**      | 111, 112, 121, 131, 141, 151                                                                                           | These are customers who have not returned for a very long time, with the lowest purchase frequency and transaction value. They are likely to have stopped using the product or switched to competitors.       |
-
-<img width="2000" height="1120" alt="Image" src="https://github.com/user-attachments/assets/5415a68d-4fe8-44cd-bbe6-28fd785cc15f" />
+<img width="2000" height="1148" alt="Image" src="https://github.com/user-attachments/assets/c514f20e-31d2-4697-aef5-26bd2f6754e5" />
 
 **📌 Key Findings**
 
-🔷 **1. Champions**
+| 👥Segment👥                    | 📐Size📐                        | 🧱Characteristics🧱                                                                 | 💰Contribution💰                                          | 🎟️Discounts🎟️                                       | 💡Insight💡                                                                                     |
+|-----------------------------|-----------------------------|---------------------------------------------------------------------------------|------------------------------------------------------|------------------------------------------------|---------------------------------------------------------------------------------------------|
+|**1. Champions**         | ~9%                        | Lowest Recency, high Frequency, and highest Monetary.                           | Top contributor in both revenue and profit.           | Receive the highest level of discounts, though unnecessary. | Highly loyal, high-value customers who continue to purchase actively.                       |
+| **2. Loyal Customers**   | ~10%                       | Strong Frequency, stable Recency, moderate Monetary.                            | Top 3 in revenue and profit, generating stable income streams. | Receive discounts regularly but are not highly dependent on them. | Stable group with strong potential to grow into Champions.                                  |
+| **3. Potential Loyalists** | ~5%                      | Highest Frequency, higher Recency, but low Monetary.                            | Limited due to lower spending.                        | Minimal impact from discounts, given the low number of transactions. | These customers return often but spend relatively little.                                   |
+|**4. Recent Customers**  | ~15% (largest group)       | Very recent purchases, but low Frequency and Monetary.                          | Small, with limited long-term value.                  | Used but with little impact.                   | Newly acquired customers with low spend and frequency → high churn risk.                    |
+|**5. Promising**         | ~14% (second largest group)  | Recently purchased, low Frequency, low spend, but strong potential.             | Moderate.                                             | Applied but with limited effectiveness.        | Similar to Recent Customers, except for significantly higher spend → require a small push to grow. |
+|**6. At Risk**           | ~12%                       | High Recency (286 days), very high Monetary ($4.8K), medium Frequency.          | High-value group but inactive for a long time.        | Low, though they need it most.                 | Previously frequent buyers with high basket sizes → extremely valuable if reactivated.       |
+|**7. Can’t Lose Them**   | ~12%                       | Previously frequent and high spenders, but almost inactive now.                 | Once high, now dropped significantly.                 | Offered but insufficient to retain.            | Long inactive, once premium customers → may have disengaged due to dissatisfaction.          |
+|**8. Hibernating<br>9.About to Sleep** | ~13–14%         | High Recency, low Frequency, low Monetary.                                      | Minimal.                                              | Ineffective, with low interaction.             | Inactive former customers with negligible value.                                            |
+|**10. Customers Needing Attention** | ~2%              | Average Recency, moderate Frequency and Monetary.                               | Almost negligible.                                    | Ineffective, with low response.                | A small, undifferentiated group that risks being overlooked.                                |
+|**11. Lost Customers**   | ~8%                        | Very high Recency, no purchases for several years.                              | Almost none.                                          | —                                              | These customers have already left and are unlikely to return.                               |
 
-- Size: ~9%
-- Characteristics: Lowest Recency, high Frequency, and highest Monetary.
-- Contribution: Top contributor in both revenue and profit.
-- Discounts: Receive the highest level of discounts, though unnecessary.
-- Insight: Highly loyal, high-value customers who continue to purchase actively.
 
-🔷 **2. Loyal Customers**
-
-- Size: ~10%
-- Characteristics: Strong Frequency, stable Recency, moderate Monetary.
-- Contribution: Top 3 in revenue and profit, generating stable income streams.
-- Discounts: Receive discounts regularly but are not highly dependent on them.
-- Insight: Stable group with strong potential to grow into Champions.
-
-🔷 **3. Potential Loyalists**
-
-- Size: ~5%
-- Characteristics: Highest Frequency, higher Recency, but low Monetary.
-- Contribution: Limited due to lower spending.
-- Discounts: Minimal impact from discounts, given the low number of transactions.
-- Insight: These customers return often but spend relatively little.
-
-🔷 **4. Recent Customers**
-
-- Size: Largest group (~15%)
-- Characteristics: Very recent purchases, but low Frequency and Monetary.
-- Contribution: Small, with limited long-term value.
-- Discounts: Used but with little impact.
-- Insight: Newly acquired customers with low spend and frequency → high churn risk.
-
-🔷 **5. Promising**
-
-- Size: ~14% (second-largest group)
-- Characteristics: Recently purchased, low Frequency, low spend, but strong potential.
-- Contribution: Moderate.
-- Discounts: Applied but with limited effectiveness.
-- Insight: Similar to Recent Customers, except for significantly higher spend → require a small push to grow.
-
-🔷 **6. At Risk**
-
-- Size: ~12%
-- Characteristics: High Recency (286 days), very high Monetary ($4.8K), medium Frequency.
-- Contribution: High-value group but inactive for a long time.
-- Discounts: Low, though they need it most.
-- Insight: Previously frequent buyers with high basket sizes → extremely valuable if reactivated.
-
-🔷 **7. Can’t Lose Them**
-
-- Size: ~12%
-- Characteristics: Previously frequent and high spenders, but almost inactive now.
-- Contribution: Once high, now dropped significantly.
-- Discounts: Offered but insufficient to retain.
-- Insight: Long inactive, once premium customers → may have disengaged due to dissatisfaction.
-
-🔷 **8. Hibernating & About to Sleep**
-
-- Size: ~13–14%
-- Characteristics: High Recency, low Frequency, low Monetary.
-- Contribution: Minimal.
-- Discounts: Ineffective, with low interaction.
-- Insight: Inactive former customers with negligible value.
-
-🔷 **9. Customers Needing Attention**
-
-- Size: ~2%
-- Characteristics: Average Recency, moderate Frequency and Monetary.
-- Contribution: Almost negligible.
-- Discounts: Ineffective, with low response.
-- Insight: A small, undifferentiated group that risks being overlooked.
-
-🔷 **10. Lost Customers**
-
-- Size: ~8%
-- Characteristics: Very high Recency, no purchases for several years.
-- Contribution: Almost none.
-- Insight: These customers have already left and are unlikely to return.
 
 # **🚀 Final Conclusions and Recommendations**
 
